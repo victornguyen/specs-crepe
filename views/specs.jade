@@ -1,0 +1,66 @@
+//- extends layout
+
+//- block content
+div#specs
+
+  //- BODY STYLE TABS
+  div#specifications-module.clearfix
+    ul.tab-set.clearfix
+      each style, i in styles
+        if i === 0
+          li.current
+            a(href='##{style.slug}')
+              img(src='#{style.image}')
+              span #{style.name}
+        else if i > 0 && i === styles.length-1
+          li.last
+            a(href='##{style.slug}')
+              img(src='#{style.image}')
+              span #{style.name}
+        else
+          li
+            a(href='##{style.slug}')
+              img(src='#{style.image}')
+              span #{style.name}
+
+    //- TAB CONTENT
+    each style, i in styles
+      - var visible = (i === 0) ? 'display:block' : ''
+      div.specifications-set.two-col(id='#{style.slug}', style='#{visible}')
+
+        //- CATEGORY TABS
+        ul.table-tabs.clearfix
+          each category, i in style.categories
+            if (i === 0)
+              li.current
+                a(href='##{category.slug}') #{category.name}
+            else
+              li
+                a(href='##{category.slug}') #{category.name}
+
+        //- GRADE HEADERS
+        table.table-headings(style='display:block;')
+          tr
+            th.tab-class &nbsp;
+            each grade, i in style.grades
+              th(class='stat model-#{i+1}') #{grade}
+
+        //- ODD CLEARING DIV
+        div.clearfix(style='height:0px')
+
+        //- ALL THE SPECS DATA
+        div.specsoverflow
+          each category, i in style.categories
+            - var visible = (i === 0) ? 'display:block' : ''
+            table(class='#{category.slug}', style='#{visible}')
+              each specs, j in category.specs
+                - var klass = (j % 2 === 1 ? 'zebra' : '')
+                tr(class='#{klass}')
+                  each cell, k in specs
+                    - var klass = (k === 0 ? 'tab-class' : 'stat')
+                    if cell.search('http://') !== -1
+                      td(class='#{klass}')
+                        img(src='#{cell}')
+                    else
+                      td(class='#{klass}') #{cell}
+

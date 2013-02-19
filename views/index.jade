@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div.container
+    div.hero-unit
+      h1= title
+      p Welcome to #{title}. That that was redudant tag line.
+      div#dropdown.btn-group
+        a.btn.btn-large.dropdown-toggle(data-toggle='dropdown', data-loading-text='Fetching specs...', data-complete-text='', href='#') Select a model&nbsp;&nbsp;&nbsp;
+          span.caret
+        ul.dropdown-menu
+          each model in models
+            li
+              a(href='##{model.slug}', data-img='#{model.img}') #{model.name}
+    div#results.row-fluid
+      div.span4
+        h3 Model Name
+        img#image
+        button#modal-trigger.btn.btn-success.btn-large View in modal
+      div.span8
+        textarea#html
+  div#gallery-overlay
+  div#gallery-modal
+    h3
+    div.gallery-content
+    //- div.gallery-footer
+    //-   span.current-item
+    //-   span.slash  / 
+    //-   span.total-items
+    //- a.prev(href='#')
+    //- a.next(href='#')
+    a.close(href='#')
