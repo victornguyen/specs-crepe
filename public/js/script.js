@@ -6,10 +6,13 @@
 
             select: (function () {
 
+                // cache elems
                 var $dropdown   = $('#dropdown'),
                     $trigger    = $dropdown.children('.btn'),
-                    $options    = $dropdown.find('.dropdown-menu a');
+                    $options    = $dropdown.find('.dropdown-menu a'),
+                    $minified   = $('#minified input');
 
+                // bind dropdown handler
                 $options.click( _handleSelect );
 
                 function _handleSelect (e) {
@@ -21,14 +24,14 @@
                         img:  $(this).attr('data-img')
                     };
 
-                    console.log('selected', model.slug);
+                    console.log('selected', model.slug, _isMinified());
 
                     _setLoading(model.name);
 
                     CREPE.results.hide();
 
                     CREPE
-                        .data.fetch(model.slug)
+                        .data.fetch( model.slug, _isMinified() )
                         .then(function(response) {
                             CREPE.results.init(model, response);
                             _reset(model.name);
@@ -37,6 +40,10 @@
 
                 function _setLoading (label) {
                     $trigger.button('loading');
+                }
+
+                function _isMinified() {
+                    return $minified.is(':checked');
                 }
 
                 function _reset (label) {
@@ -55,8 +62,8 @@
             }()),
 
             data: {
-                fetch: function(slug){
-                    return $.get('/specs/' + slug);
+                fetch: function(slug, isMinified){
+                    return $.get('/specs/' + slug, { minified: isMinified });
                 }
             },
 

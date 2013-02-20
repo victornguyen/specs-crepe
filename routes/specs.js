@@ -9,9 +9,10 @@ exports.fetch = function(req, res){
         jsdom   = require('jsdom'),
         request = require('request');
 
-    var model = req.params.model;
+    var model       = req.params.model,
+        isMinified  = req.query.minified == 'true' ? true : false;
 
-    console.log('Model requested: ', model, req.params);
+    console.log('Model requested: ', model, req.params, req.query, isMinified);
 
     request(
         { uri: 'http://www.mazda.com.au/vehicles/'+ model +'/specifications' },
@@ -49,7 +50,7 @@ exports.fetch = function(req, res){
 
                     // res.send('There are ' + $styles.length + ' body style(s) for the ' + model);
                     var carName = $body.find('h1').text().replace(' Specifications','');
-                    res.render('specs', { title:carName, styles:specs });
+                    res.render('specs', { title:carName, styles:specs, pretty:!isMinified });
 
                     function _parseBodyStyleHtml(i,bodyStyle) {
                         var style = {

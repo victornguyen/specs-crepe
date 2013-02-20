@@ -12,6 +12,9 @@ block content
           each model in models
             li
               a(href='##{model.slug}', data-img='#{model.img}') #{model.name}
+      label#minified.checkbox.inline
+        input(type='checkbox', checked)
+        | Minified
     div#results.row-fluid
       div.span4
         h3 Model Name
