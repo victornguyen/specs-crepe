@@ -5,16 +5,20 @@ block content
     div.hero-unit
       h1= title
       p Welcome to #{title}. That that was redudant tag line.
-      div#dropdown.btn-group
-        a.btn.btn-large.dropdown-toggle(data-toggle='dropdown', data-loading-text='Fetching specs...', data-complete-text='', href='#') Select a model&nbsp;&nbsp;&nbsp;
-          span.caret
-        ul.dropdown-menu
-          each model in models
-            li
-              a(href='##{model.slug}', data-img='#{model.img}') #{model.name}
-      label#minified.checkbox.inline
-        input(type='checkbox', checked)
-        | Minified
+      form#form-specs.form-inline
+        div#dropdown.btn-group
+          a.btn.btn-large.dropdown-toggle(data-toggle='dropdown', data-loading-text='Fetching specs...', data-complete-text='', href='#') Select a model&nbsp;&nbsp;&nbsp;
+            span.caret
+          ul.dropdown-menu
+            each model in models
+              li
+                a(href='##{model.slug}', data-img='#{model.img}') #{model.name}
+        label#modifier Modifier: 
+          input.input-small(type='text', placeholder='none', value='two-col', data-toggle='popover', data-placement='bottom', data-trigger='focus', data-html='true', data-title='Modifier CSS Class', data-content='Applied to <code>div.specifications-set</code> to enable custom styling per vehicle.')
+        label#minified.checkbox
+          input(type='checkbox', checked)
+          |  Minified output
+        button#submit.btn.btn-primary.btn-large Get Specs
     div#results.row-fluid
       div.span4
         h3 Model Name

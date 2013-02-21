@@ -24,7 +24,7 @@ div#specs
     //- TAB CONTENT
     each style, i in styles
       - var visible = (i === 0) ? 'display:block' : ''
-      div.specifications-set.two-col(id='#{style.slug}', style='#{visible}')
+      div(class='specifications-set #{modifier}', id='#{style.slug}', style='#{visible}')
 
         //- CATEGORY TABS
         ul.table-tabs.clearfix

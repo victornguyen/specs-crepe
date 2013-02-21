@@ -7,31 +7,38 @@
             select: (function () {
 
                 // cache elems
-                var $dropdown   = $('#dropdown'),
+                var model       = null, // set in _setSelectedModel()
+                    $dropdown   = $('#dropdown'),
                     $trigger    = $dropdown.children('.btn'),
                     $options    = $dropdown.find('.dropdown-menu a'),
-                    $minified   = $('#minified input');
+                    $modifier   = $('#modifier input'),
+                    $minified   = $('#minified input'),
+                    $submit     = $('#submit');
 
-                // bind dropdown handler
+                // bind event handlers
                 $options.click( _handleSelect );
+                $submit.click( _handleSubmit );
+
+                // create popover for modifier field
+                $modifier.popover();
 
                 function _handleSelect (e) {
                     e.preventDefault();
+                    _setSelectedModel(this);
+                    _reset(model.name);
+                }
 
-                    var model = {
-                        slug: $(this).attr('href').replace(/#/,''),
-                        name: $(this).text(),
-                        img:  $(this).attr('data-img')
-                    };
+                function _handleSubmit(e) {
+                    e.preventDefault();
 
-                    console.log('selected', model.slug, _isMinified());
+                    var model = _getSelectedModel();
 
                     _setLoading(model.name);
 
                     CREPE.results.hide();
 
                     CREPE
-                        .data.fetch( model.slug, _isMinified() )
+                        .data.fetch( model.slug, _getModifier(), _isMinified() )
                         .then(function(response) {
                             CREPE.results.init(model, response);
                             _reset(model.name);
@@ -42,8 +49,26 @@
                     $trigger.button('loading');
                 }
 
+                function _setSelectedModel(option) {
+                    var $option = $(option);
+                    model = {
+                        slug: $option.attr('href').replace(/#/,''),
+                        name: $option.text(),
+                        img:  $option.attr('data-img')
+                    };
+                    console.log('selected', model.slug);
+                }
+
+                function _getSelectedModel() {
+                    return model;
+                }
+
                 function _isMinified() {
                     return $minified.is(':checked');
+                }
+
+                function _getModifier() {
+                    return $modifier.val();
                 }
 
                 function _reset (label) {
@@ -56,14 +81,14 @@
                 }
 
                 return {
-
+                    getSelectedModel: _getSelectedModel
                 };
 
             }()),
 
             data: {
-                fetch: function(slug, isMinified){
-                    return $.get('/specs/' + slug, { minified: isMinified });
+                fetch: function(slug, modifier, isMinified){
+                    return $.get('/specs/' + slug, { minified:isMinified, modifier:modifier });
                 }
             },
 

@@ -11,6 +11,7 @@ exports.fetch = function(req, res){
 
     var model       = req.params.model,
         isMinified  = req.query.minified == 'true' ? true : false;
+        modifier    = req.query.modifier;
 
     console.log('Model requested: ', model, req.params, req.query, isMinified);
 
@@ -50,7 +51,15 @@ exports.fetch = function(req, res){
 
                     // res.send('There are ' + $styles.length + ' body style(s) for the ' + model);
                     var carName = $body.find('h1').text().replace(' Specifications','');
-                    res.render('specs', { title:carName, styles:specs, pretty:!isMinified });
+                    res.render(
+                        'specs',
+                        {
+                            title:      carName,
+                            styles:     specs,
+                            modifier:   modifier,
+                            pretty:     !isMinified
+                        }
+                    );
 
                     function _parseBodyStyleHtml(i,bodyStyle) {
                         var style = {
