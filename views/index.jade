@@ -18,7 +18,10 @@ block content
         label#minified.checkbox
           input(type='checkbox', checked)
           |  Minified output
-        button#submit.btn.btn-primary.btn-large(data-loading-text='Fetching specs...') Get Specs
+        button#submit.btn.btn-primary.btn-large(disabled, data-loading-text='Fetching specs...') Get Specs
+        //- span#help.help-inline
+        //-   i.icon-exclamation-sign
+        //-   |  Select a model first!
     div#results.row-fluid
       div.span4
         h3 Model Name

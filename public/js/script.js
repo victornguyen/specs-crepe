@@ -14,6 +14,7 @@
                     $modifier   = $('#modifier input'),
                     $minified   = $('#minified input'),
                     $submit     = $('#submit');
+                    $help       = $('#help');
 
                 // bind event handlers
                 $options.click( _handleSelect );
@@ -26,6 +27,7 @@
                     e.preventDefault();
                     _setSelectedModel(this);
                     _setSelectLabel(model.name);
+                    _enableSubmit();
                 }
 
                 function _handleSubmit(e) {
@@ -52,6 +54,16 @@
 
                 function _setReady() {
                     $submit.button('reset');
+                }
+
+                function _disableSubmit() {
+                    $submit.attr('disabled', 'disabled');
+                    // $help.fadeIn(100);
+                }
+
+                function _enableSubmit() {
+                    $submit.removeAttr('disabled');
+                    // $help.fadeOut(100);
                 }
 
                 function _setSelectedModel(option) {
