@@ -25,7 +25,7 @@
                 function _handleSelect (e) {
                     e.preventDefault();
                     _setSelectedModel(this);
-                    _reset(model.name);
+                    _setSelectLabel(model.name);
                 }
 
                 function _handleSubmit(e) {
@@ -41,12 +41,17 @@
                         .data.fetch( model.slug, _getModifier(), _isMinified() )
                         .then(function(response) {
                             CREPE.results.init(model, response);
-                            _reset(model.name);
+                            _setSelectLabel(model.name);
+                            _setReady();
                         });
                 }
 
-                function _setLoading (label) {
-                    $trigger.button('loading');
+                function _setLoading(label) {
+                    $submit.button('loading');
+                }
+
+                function _setReady() {
+                    $submit.button('complete');
                 }
 
                 function _setSelectedModel(option) {
@@ -71,11 +76,10 @@
                     return $modifier.val();
                 }
 
-                function _reset (label) {
+                function _setSelectLabel (label) {
                     var defaultLabel    = 'Select a model',
                         spacing         = '&nbsp;&nbsp;&nbsp;';
                     $trigger
-                        .button('reset')
                         .html((label || defaultLabel) + spacing)
                         .append('<span class="caret"></span>');
                 }

@@ -7,7 +7,7 @@ block content
       p Welcome to #{title}. That that was redudant tag line.
       form#form-specs.form-inline
         div#dropdown.btn-group
-          a.btn.btn-large.dropdown-toggle(data-toggle='dropdown', data-loading-text='Fetching specs...', data-complete-text='', href='#') Select a model&nbsp;&nbsp;&nbsp;
+          a.btn.btn-large.dropdown-toggle(data-toggle='dropdown', href='#') Select a model&nbsp;&nbsp;&nbsp;
             span.caret
           ul.dropdown-menu
             each model in models
@@ -18,7 +18,7 @@ block content
         label#minified.checkbox
           input(type='checkbox', checked)
           |  Minified output
-        button#submit.btn.btn-primary.btn-large Get Specs
+        button#submit.btn.btn-primary.btn-large(data-loading-text='Fetching specs...', data-complete-text='Get Specs') Get Specs
     div#results.row-fluid
       div.span4
         h3 Model Name
