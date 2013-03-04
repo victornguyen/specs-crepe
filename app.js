@@ -4,11 +4,8 @@
  */
 
 var express = require('express'),
-    _       = require('underscore'),
     routes  = require('./routes'),
-    specs   = require('./routes/specs'),
-    http    = require('http'),
-    path    = require('path');
+    specs   = require('./routes/specs');
 
 var app = express();
 
