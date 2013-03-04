@@ -51,7 +51,7 @@
                 }
 
                 function _setReady() {
-                    $submit.button('complete');
+                    $submit.button('reset');
                 }
 
                 function _setSelectedModel(option) {
