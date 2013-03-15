@@ -47,7 +47,7 @@ exports.index = function(req, res){
                 vehicles.push(
                     {
                         slug:   $link.attr('href').replace(/\/vehicles\//,''),
-                        name:   $link.attr('title'),
+                        name:   $link.text(),
                         img:    host + $link.find('img').attr('src').split('?')[0]
                     }
                 );
