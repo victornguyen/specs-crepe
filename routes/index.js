@@ -6,7 +6,7 @@
 exports.index = function(req, res){
 
     var _       = require('underscore'),
-        jsdom   = require('jsdom'),
+        cheerio = require('cheerio'),
         request = require('request');
 
 
@@ -28,18 +28,11 @@ exports.index = function(req, res){
                 // TODO: render error page here...
             }
 
-            jsdom.env(
-                {
-                    html:       body,
-                    scripts:    ['http://code.jquery.com/jquery.min.js']
-                },
-                parsePage
-            );
+            parsePage(body);
         }
 
-        function parsePage(error, window) {
-            var $               = window.jQuery,
-                $body           = $(window.document.body),
+        function parsePage(body) {
+            var $               = cheerio.load(body),
                 $vehicleLinks   = $('#vehicles').children('a');
 
             $vehicleLinks.each(function(i,link) {
